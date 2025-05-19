@@ -18,9 +18,14 @@ def get_links(links):
         content = table.find_elements(By.CLASS_NAME, "wrap_DjvF8")
 
         for el in content:
-            new_link = el.find_element(By.CLASS_NAME, "header_DjvF8").get_attribute('href')
-            links.append(new_link)
-            print(new_link)
+            new_link = el.find_element(By.CLASS_NAME, "header_DjvF8")
+            time = el.find_element(By.CLASS_NAME, "text_0UNFI")
+            try:
+                img = el.find_element(By.TAG_NAME, "img").get_attribute("src")
+            except Exception:
+                img = ""
+            links.append(new_link.get_attribute("href"))
+            print(f"Title: {new_link.text}\nTime: {time.text}\nImage Link: {img}\nOrigin Link: {new_link.get_attribute('href')}\n\n")
 
     except Exception as ex:
         traceback.print_exc()
@@ -38,22 +43,36 @@ def chek_news(link):
     # options_chrome.add_argument('--no-sandbox')
     driverpobeda = webdriver.Chrome(options=options_chrome)
     if 'longreads' in link:
-        pass
-        driverpobeda.quit()
+        try:
+            url = link
+            driverpobeda.get(url)
+            wait = WebDriverWait(driverpobeda, 20)
+            wait.until(EC.presence_of_element_located((By.CLASS_NAME, "tn-atom")))
+            content = driverpobeda.find_elements(By.CLASS_NAME, "tn-atom")
+            text = ""
+            for el in content:
+                if len(el.text) > 0:
+                    text += el.text + " "
+
+            print(f"Text: {text}\n\n")
+
+
+        except Exception as ex:
+            traceback.print_exc()
+            print("Рейсы не найдены")
+
+        finally:
+            driverpobeda.quit()  # Закрываем браузер
+
+
     else:
         try:
             url = link
             driverpobeda.get(url)
             wait = WebDriverWait(driverpobeda, 20)
             table = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "gridContent_6I1dB")))
-            title = table.find_element(By.CLASS_NAME, "title_Gq8Rx")
-            time = table.find_element(By.CLASS_NAME, "item_VmtHQ")
             text = table.find_element(By.CLASS_NAME, "articleContent_fefJj")
-            try:
-                img = table.find_element(By.CLASS_NAME, "image_nZVrb").get_attribute('src')
-            except Exception:
-                img = ""
-            print(f"Title: {title.text}\nTime: {time.text}\nText: {text.text}\nImage Link: {img}\n\n")
+            print(f"Text: {text.text}\n\n")
 
 
         except Exception as ex:
@@ -68,6 +87,8 @@ def chek_news(link):
 links = []
 
 new_links = get_links(links)
+for one in new_links:
+    print(one)
 
 for link in new_links:
     chek_news(link)
