@@ -1,4 +1,3 @@
-import psycopg2
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,9 +7,7 @@ import traceback
 from urllib3.exceptions import ReadTimeoutError
 
 from OpenRouterApi import summorize_text
-
-conn = psycopg2.connect(dbname="ItmosnikIko", host="127.0.0.1", user="Alex", password="alex")
-cursor = conn.cursor()
+from db import cursor, conn
 
 
 def get_links(links, titles, times, imgs):

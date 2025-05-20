@@ -1,1 +1,4 @@
 .env
+backup.sql
+__pycache__/
+chromedriver.log
