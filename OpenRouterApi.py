@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.getenv("BOT_TOKEN")
+api_key = os.getenv("api_key")
 
 
 
