@@ -1,3 +1,4 @@
+import psycopg2
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -7,13 +8,15 @@ import traceback
 from urllib3.exceptions import ReadTimeoutError
 
 from OpenRouterApi import summorize_text
-from db import cursor, conn
+
+conn = psycopg2.connect(dbname="ItmosnikIko", host="127.0.0.1", user="Alex", password="alex")
+cursor = conn.cursor()
 
 
 def get_links(links, titles, times, imgs):
     options_chrome = webdriver.ChromeOptions()
-    options_chrome.add_argument("--headless")
-    options_chrome.add_argument('--no-sandbox')
+    #options_chrome.add_argument("--headless")
+    #options_chrome.add_argument('--no-sandbox')
     driver = webdriver.Chrome(options=options_chrome)
 
     try:
@@ -132,4 +135,3 @@ for i in range(len(texts)):
     cursor.execute('INSERT INTO news (title, date, text, image_link, origin_link) '
                                                'VALUES (%s, %s, %s, %s, %s)', parametrs)
     conn.commit()
-
