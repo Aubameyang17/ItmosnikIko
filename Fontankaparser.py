@@ -101,7 +101,7 @@ def chek_news(link):
             driverpobeda.execute_script("window.stop();")
         except Exception as ex:
             traceback.print_exc()
-            print("Рейсы не найдены")
+            print("Чтобы Максим не расстраивался")
 
         finally:
             driverpobeda.quit()  # Закрываем браузер
