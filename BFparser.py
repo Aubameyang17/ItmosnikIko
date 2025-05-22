@@ -119,3 +119,6 @@ for i in range(len(texts)):
     check_title.append(titles[i])
     parametrs = (titles[i], times[i], texts[i], imgs[i], new_links[i])
     print(f"Link: {new_links[i]}\nTitle: {titles[i]}\nTime: {times[i]}\nImg Link{imgs[i]}\n Text: {texts[i]}\n\n")
+    cursor.execute('INSERT INTO news (title, date, text, image_link, origin_link) '
+                   'VALUES (%s, %s, %s, %s, %s)', parametrs)
+    conn.commit()
