@@ -41,10 +41,10 @@ def get_links(links, titles, times):
                 new_link = el.get("href")
 
 
-                """# Проверка наличия в БД
+                # Проверка наличия в БД
                 cursor.execute("SELECT 1 FROM news WHERE origin_link = %s", (new_link,))
                 if cursor.fetchone():
-                    continue"""
+                    continue
 
                 # Добавляем в списки
                 links.append(new_link)
@@ -135,9 +135,9 @@ print("Len texts: ", len(texts))
 for i in range(len(texts)):
     parametrs = (titles[i], times[i], texts[i], "", new_links[i])
     print(f"Link: {new_links[i]}\nTitle: {titles[i]}\nTime: {times[i]}\n Text: {texts[i]}\n\n")
-    """cursor.execute('INSERT INTO news (title, date, text, image_link, origin_link) '
+    cursor.execute('INSERT INTO news (title, date, text, image_link, origin_link) '
                    'VALUES (%s, %s, %s, %s, %s)', parametrs)
     conn.commit()
 
 cursor.close()
-conn.close()"""
+conn.close()
