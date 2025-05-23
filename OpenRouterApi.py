@@ -19,7 +19,7 @@ def summorize_text(text_to_summarize):
         text_to_summarize = text_to_summarize[:6000]
 
     data = {
-        "model": "anthropic/claude-3-haiku",  # можно заменить на другую модель
+        "model": "deepseek/deepseek-prover-v2:free",  # можно заменить на другую модель
         "max_tokens": 1000,
         "messages": [
             {
@@ -39,8 +39,8 @@ def summorize_text(text_to_summarize):
 
 def maintheme_text(text_to_summarize):
     data = {
-        "model": "anthropic/claude-3-haiku",  # можно заменить на другую модель
-        "max_tokens": 1000,
+        "model": "deepseek/deepseek-prover-v2:free",  # можно заменить на другую модель
+        "max_tokens": 500,
         "messages": [
             {
                 "role": "user",
@@ -53,8 +53,6 @@ def maintheme_text(text_to_summarize):
     }
 
     response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
-    print(response.status_code)
-    print(response.text)
     summary = response.json()['choices'][0]['message']['content']
 
     return summary
